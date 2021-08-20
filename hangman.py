@@ -100,9 +100,6 @@ def main():
         secret = getunderlinedword(word2)
         global w, s
         w, s = word2, secret
-        #hhhhhhit
-
-
 
     uin2 = getuserinput()
     temp = guesscheck(w, uin2, s)
