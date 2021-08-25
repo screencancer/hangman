@@ -50,10 +50,12 @@ def randomword(wordlist):
     game = 1
     return wordlist[idx]
 
+
 def getunderlinedword(word):
     secretword = '_'*len(word)
     print("The word is", secretword)
     return secretword
+
 
 def allinstances(word, uin, secret):
     string = word
@@ -65,6 +67,7 @@ def allinstances(word, uin, secret):
     print(lst)
     return lst
 
+
 def getuserinput():
     uin = input("Input the letter a-z to guess")
     return uin
@@ -72,6 +75,7 @@ def getuserinput():
 
 def guesscheck(word, uin, secret):
     x = word.find(uin)
+    x2 = x + 1
     lst = allinstances(word,uin,secret)
     print(x)
     global storesecret
@@ -83,11 +87,11 @@ def guesscheck(word, uin, secret):
         if storesecret != None:
             temp2 = list(storesecret)
             for idx in lst:
-                temp2[idx-1] = uin
+                temp2[idx] = uin
             storesecret = ''.join(temp2)
         else:
             for idx in lst:
-                temp[idx-1] = uin
+                temp[idx] = uin
             storesecret = ''.join(temp)
         print(storesecret)
         return storesecret
@@ -107,6 +111,8 @@ def main():
         x = input("You won play again y or n?")
         if x == 'y':
             game = 0
+            global storesecret
+            storesecret = None
             main()
         else:
             sys.exit()
