@@ -3,6 +3,7 @@ import sys
 
 game = 0
 storesecret = None
+wrongcount = 0
 
 HANGMAN_PICS = ['''
    +---+
@@ -45,7 +46,6 @@ words = 'ant baboon badger bat bear beaver camel cat clam cobra cougar coyote cr
 
 def randomword(wordlist):
     idx = random.randint(0, len(wordlist) - 1)
-    print(wordlist[idx])
     global game
     game = 1
     return wordlist[idx]
@@ -64,23 +64,33 @@ def allinstances(word, uin, secret):
     for i in range(len(string)):
         if (string[i] == char):
             lst.append(i)
-    print(lst)
     return lst
 
 
 def getuserinput():
-    uin = input("Input the letter a-z to guess")
+    uin = input("Input the letter a-z to guess\n")
     return uin
 
 
 def guesscheck(word, uin, secret):
     x = word.find(uin)
-    x2 = x + 1
     lst = allinstances(word,uin,secret)
-    print(x)
     global storesecret
     if x == -1:
         print("Word not found try again")
+        global wrongcount
+        wrongcount += 1
+        print(HANGMAN_PICS[wrongcount])
+        if wrongcount == len(HANGMAN_PICS) - 1:
+            x = input("You lost play again y or n?")
+            if x == 'y':
+                game = 0
+                global storesecret
+                wrongcount = 0
+                storesecret = None
+                main()
+            else:
+                sys.exit()
     else:
         print(f'{uin} was found in the word')
         temp = list(secret)
@@ -104,7 +114,7 @@ def main():
         secret = getunderlinedword(word2)
         global w, s
         w, s = word2, secret
-
+        print(HANGMAN_PICS[0])
     uin2 = getuserinput()
     temp = guesscheck(w, uin2, s)
     if temp == w:
@@ -112,6 +122,8 @@ def main():
         if x == 'y':
             game = 0
             global storesecret
+            global wrongcount
+            wrongcount = 0
             storesecret = None
             main()
         else:
