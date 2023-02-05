@@ -90,6 +90,7 @@ def guesscheck(word, uin, secret):
                 storesecret = None
                 main()
             else:
+                print(f'it was a {word}')
                 sys.exit()
     else:
         print(f'{uin} was found in the word')
